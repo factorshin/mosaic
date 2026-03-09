@@ -51,10 +51,13 @@ flowchart TB
     change -- no --> done
 ```
 
-Scale steps to project size:
+**Before proceeding past V1, always ask the user about project scale and team needs.** Do not decide unilaterally. Present the scale options with a brief explanation of what each entails, and let the user choose:
+
 - **Solo project**: Skip V2 (team assignment) and V3 (cross-team consistency), or reduce to inter-module consistency review
 - **Small team**: Simplify V3 for faster iteration
 - **Large project**: Execute all steps thoroughly
+
+Even if the project appears small, explain the trade-offs (e.g., "This project could be handled solo, but forming a small team would allow domain-separated reviews. Which approach would you prefer?") and wait for the user's decision before skipping any phase.
 
 See `checklists.md` for detailed prompts and checklists for each phase.
 
