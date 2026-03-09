@@ -1,7 +1,7 @@
 {
   "name": "mosaic",
   "description": "DCVE (Diverge-Converge-Verify-Execute) methodology for systematic project planning and execution with Claude Code agent teams",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": {
     "name": "factorshin"
   },
