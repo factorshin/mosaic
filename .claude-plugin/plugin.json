@@ -1,11 +1,11 @@
 {
   "name": "mosaic",
-  "description": "DCVE (Diverge-Converge-Verify-Execute) methodology for systematic project planning and execution with Claude Code agent teams",
-  "version": "1.0.2",
+  "description": "DCVE methodology for systematic project planning, and Discuss for multi-perspective debate and decision-making — both powered by Claude Code agent teams",
+  "version": "1.1.0",
   "author": {
     "name": "factorshin"
   },
   "repository": "https://github.com/factorshin/mosaic",
   "license": "MIT",
-  "keywords": ["dcve", "agent-teams", "project-planning", "methodology"]
+  "keywords": ["dcve", "discuss", "agent-teams", "project-planning", "debate", "decision-making", "methodology"]
 }

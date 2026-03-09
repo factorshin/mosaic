@@ -23,7 +23,17 @@ The Verify phase is where DCVE differentiates itself: each team member reviews t
 
 **Usage**: `/mosaic:run-dcve` or describe a project to build from scratch.
 
-*More skills coming soon.*
+### Discuss (Multi-Perspective Discussion & Debate)
+
+A structured discussion framework for decision-making.
+
+1. **Setup** — Clarify the question and create a discussion team (Advocate, Critic, Synthesizer)
+2. **Discussion** — 3 rounds: Opening Positions, Challenge & Rebuttal, Final Statements
+3. **Synthesis** — Moderator compiles a structured report with recommendations
+
+When you need advice, the skill creates agent team members with distinct perspectives who debate the topic and deliver a comprehensive report — covering strengths, risks, trade-offs, agreements, disagreements, and a final recommendation.
+
+**Usage**: `/mosaic:run-discuss` or ask for advice on a decision.
 
 ## Requirements
 
