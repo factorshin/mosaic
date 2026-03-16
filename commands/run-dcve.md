@@ -1,5 +1,5 @@
 ---
-description: "Start a DCVE (Diverge-Converge-Verify-Execute) cycle for systematic project planning and execution with agent teams"
+description: "Start a DCVE (Devise-Curate-Verify-Execute) cycle for systematic project planning and execution with agent teams"
 disable-model-invocation: true
 ---
 
