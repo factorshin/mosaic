@@ -1,6 +1,6 @@
 ---
 name: dcve
-description: Structured design-to-implementation process for complex projects. This skill should be used when the user wants to "build a new project from scratch", "create a new service", "build a new platform", "design a new system", "plan a new application", "start building from scratch", or needs to design and plan a multi-component project, application, or platform before implementation.
+description: Structured design-to-implementation process for complex projects. This skill should be used when the user wants to "build a new project from scratch", "create a new service", "create a new app", "make a new service", "build an application", "build a new platform", "design a new system", "plan a new application", "start building from scratch", or needs to design and plan a multi-component project, application, or platform before implementation.
 ---
 
 # DCVE — Devise · Curate · Verify · Execute
