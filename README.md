@@ -1,4 +1,4 @@
-# Mosaic
+# Mosaic2
 
 A mosaic of skills crafted for Claude Code multi-agent team mode.
 
@@ -8,12 +8,12 @@ This plugin was born from real-world experience building complex systems with Cl
 
 ## Skills
 
-### DCVE (Diverge · Converge · Verify · Execute)
+### DCVE (Devise · Curate · Verify · Execute)
 
 A structured design-to-implementation methodology for complex projects.
 
-1. **Diverge** — Generate ideas without judgment
-2. **Converge** — Select what matters most
+1. **Devise** — Generate ideas without judgment
+2. **Curate** — Select what matters most
 3. **Verify** — Design, validate, assign teams, cross-check
 4. **Execute** — Build with full team coordination
 

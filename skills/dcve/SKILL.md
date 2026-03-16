@@ -3,7 +3,7 @@ name: dcve
 description: Structured design-to-implementation process for complex projects. This skill should be used when the user wants to "build a new project from scratch", "create a new service", "build a new platform", "design a new system", "plan a new application", "start building from scratch", or needs to design and plan a multi-component project, application, or platform before implementation.
 ---
 
-# DCVE — Diverge · Converge · Verify · Execute
+# DCVE — Devise · Curate · Verify · Execute
 
 ## Overview
 
@@ -29,8 +29,8 @@ Before starting, verify:
 
 ```mermaid
 flowchart TB
-    D["D (Diverge)\nIdea Generation"]
-    C["C (Converge)\nCore Selection"]
+    D["D (Devise)\nIdea Generation"]
+    C["C (Curate)\nCore Selection"]
     V1["V1: Design &\nFeasibility Verification"]
     V2["V2: Team Assignment &\nDetailed Design\n+ CLAUDE.md"]
     V3["V3: Cross-Team\nConsistency Verification"]
@@ -63,13 +63,13 @@ See `checklists.md` for detailed prompts and checklists for each phase.
 
 ---
 
-## D — Diverge
+## D — Devise
 
 **Goal**: Generate as many ideas as possible without constraints.
 
 1. Clarify the problem to solve or the service to build
 2. List all possible features, approaches, and solutions **without judgment**
-3. Diverge evenly across user, technical, and business perspectives
+3. Devise ideas evenly across user, technical, and business perspectives
 4. Record every idea without omission
 
 **Do NOT**: Evaluate ideas or assess feasibility. Do not limit quantity.
@@ -78,9 +78,9 @@ See `checklists.md` for detailed prompts and checklists for each phase.
 
 ---
 
-## C — Converge
+## C — Curate
 
-**Goal**: Select the essential, core ideas from the diverged pool.
+**Goal**: Select the essential, core ideas from the devised pool.
 
 1. Identify core features that directly contribute to solving the problem
 2. Distinguish core vs. nice-to-have features and prioritize (impact, difficulty, dependencies, urgency)
@@ -96,7 +96,7 @@ See `checklists.md` for detailed prompts and checklists for each phase.
 
 ### V1. Design & Feasibility Verification
 
-Transform the converged spec into an implementable design.
+Transform the curated spec into an implementable design.
 
 1. Design the overall system architecture
 2. Select the tech stack (with rationale)

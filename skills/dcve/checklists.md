@@ -4,7 +4,7 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 
 ---
 
-## D — Diverge
+## D — Devise
 
 ### Prompts
 
@@ -13,7 +13,7 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 - Who experiences this problem, and in what context?
 - What pain or loss occurs if this problem remains unsolved?
 
-**Feature Divergence**
+**Feature Ideation**
 - What features could address this problem?
 - If similar services already exist, what are they missing?
 - If there were no constraints, what would the ideal solution look like?
@@ -30,13 +30,13 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 
 - [ ] Maximized quantity of ideas without evaluating them
 - [ ] Included unconventional or seemingly unrealistic ideas
-- [ ] Diverged from all three perspectives: user, technical, and business
+- [ ] Devised from all three perspectives: user, technical, and business
 - [ ] Recorded every idea without omission
 - [ ] Reached a state where no new ideas are emerging
 
 ---
 
-## C — Converge
+## C — Curate
 
 ### Prompts
 
