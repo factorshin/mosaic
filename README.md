@@ -1,4 +1,4 @@
-# Mosaic2
+# Mosaic
 
 A mosaic of skills crafted for Claude Code multi-agent team mode.
 
