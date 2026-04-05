@@ -1,11 +1,11 @@
 {
   "name": "mosaic",
-  "description": "DCVE methodology for systematic project planning, and Discuss for multi-perspective debate and decision-making — both powered by Claude Code agent teams",
-  "version": "1.1.2",
+  "description": "Mosaic: Claude Code skills that orchestrate multi-agent teams for the preparation work — project planning (DCVE), decision debates (Discuss), and brownfield team bootstrapping (Assemble)",
+  "version": "1.2.0",
   "author": {
     "name": "factorshin"
   },
   "repository": "https://github.com/factorshin/mosaic",
   "license": "MIT",
-  "keywords": ["dcve", "discuss", "agent-teams", "project-planning", "debate", "decision-making", "methodology"]
+  "keywords": ["dcve", "discuss", "assemble", "agent-teams", "project-planning", "debate", "decision-making", "team-bootstrap", "brownfield", "methodology"]
 }

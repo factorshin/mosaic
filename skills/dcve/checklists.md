@@ -2,6 +2,8 @@
 
 Self-prompting questions for each phase, and checklists to determine phase completion.
 
+**Scale-dependent phases**: V2 and V3 checklists apply to Team scale only. Solo projects skip V2/V3 entirely and proceed from V1 to E. Teams execute V2/V3 fully with V3 cross-review limited to directly adjacent domains.
+
 ---
 
 ## D — Devise
@@ -31,7 +33,7 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 - [ ] Maximized quantity of ideas without evaluating them
 - [ ] Included unconventional or seemingly unrealistic ideas
 - [ ] Devised from all three perspectives: user, technical, and business
-- [ ] Recorded every idea without omission
+- [ ] Recorded every idea in `docs/spec/v{N}/devise.md`
 - [ ] Reached a state where no new ideas are emerging
 
 ---
@@ -61,7 +63,7 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 - [ ] Prioritization criteria are explicit (impact, difficulty, dependencies, etc.)
 - [ ] Dependencies between features have been identified
 - [ ] MVP scope has been defined
-- [ ] Discarded ideas have been recorded for potential future use
+- [ ] Curated result recorded in `docs/spec/v{N}/curated.md` (including deselected ideas)
 
 ---
 
@@ -78,7 +80,7 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 - Is this design actually implementable?
 - Where are the technical bottlenecks?
 - What are the risk factors in terms of performance, scalability, and security?
-- Are the estimated resources (people, time, cost) realistic?
+- Are the estimated resources (agent count, dependencies, implementation complexity) realistic?
 - Which areas have uncertain implementation? Are any PoCs needed?
 
 **Alternatives**
@@ -87,12 +89,13 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 
 ### Checklist
 
-- [ ] Overall system architecture diagram has been created
+- [ ] Overall system architecture has been documented (e.g., component list with interactions)
 - [ ] Technology stack has been selected with documented rationale
 - [ ] Technically uncertain areas have been identified
 - [ ] Performance, scalability, and security risks have been assessed
 - [ ] Resource estimation has been performed
-- [ ] Ready to fall back to the C phase if infeasible specs are discovered
+- [ ] Project specification compiled in `docs/spec/v{N}/spec.md`
+- [ ] Infeasibility criteria have been defined (what would make this spec infeasible)
 
 ---
 
@@ -123,7 +126,10 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 - [ ] Task lists and priorities have been derived
 - [ ] Inter-task dependencies have been documented
 - [ ] Definition of Done has been defined for each task
-- [ ] Documentation is complete
+- [ ] Each owner's review written as `review_{agent_name}.md` in `docs/spec/v{N}/`
+- [ ] Team created via TeamCreate and members spawned via Agent tool
+- [ ] CLAUDE.md updated with DCVE configuration (team composition, operating rules, document structure)
+- [ ] Document management setup confirmed with user (opted in/out, designated manager if applicable)
 
 ---
 
@@ -177,12 +183,19 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 - Have any unexpected technical issues arisen?
 - Has a situation arisen that requires spec changes?
 
-### Checklist
+### Pre-Execution Checklist
 
 - [ ] Every owner's final design document is in confirmed state
 - [ ] No unresolved conflicts or pending decisions remain
 - [ ] Execution approval has been confirmed
-- [ ] Re-entry criteria for DCVE cycle during execution have been pre-defined
+
+### In-Execution Checklist
+
+- [ ] Each owner is implementing tasks in the defined order
+- [ ] Completed tasks have been verified against their Definition of Done
+- [ ] Task completions have been reported to the team leader
+- [ ] Cross-domain issues have been escalated to the team leader before proceeding
+- [ ] Team leader has reported milestone completions to the user
 
 ### E → D Re-Entry Checklist
 

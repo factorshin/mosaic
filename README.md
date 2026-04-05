@@ -35,6 +35,19 @@ When you need advice, the skill creates agent team members with distinct perspec
 
 **Usage**: `/mosaic:run-discuss` or ask for advice on a decision.
 
+### Assemble (Brownfield Agent Team Bootstrap)
+
+A skill for setting up a Claude Code agent team inside an existing codebase.
+
+1. **Scan** — Read the repo's layout, manifests, README, and existing CLAUDE.md
+2. **Interview** — Ask about active work areas, priorities, and any custom operating rules
+3. **Propose** — Present a team composition (roles, rationale, scope, CLAUDE.md plan) for approval
+4. **Execute** — Write CLAUDE.md and spawn the team
+
+Unlike DCVE, Assemble does not design new work — it reads what the repo already is and configures a team around the user's actual priorities. The proposal is always rendered in the user's language, and code identifiers and user-provided custom rules are preserved verbatim.
+
+**Usage**: `/mosaic:run-assemble` or ask to "assemble a team" or "set up an agent team" for an existing project.
+
 ## Requirements
 
 - Claude Code with agent teams enabled via one of:
