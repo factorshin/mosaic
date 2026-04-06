@@ -1,7 +1,7 @@
 {
   "name": "mosaic",
   "description": "Mosaic: Claude Code skills that orchestrate multi-agent teams for the preparation work — project planning (DCVE), decision debates (Discuss), and brownfield team bootstrapping (Assemble)",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "factorshin"
   },

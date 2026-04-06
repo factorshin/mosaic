@@ -126,9 +126,9 @@ Self-prompting questions for each phase, and checklists to determine phase compl
 - [ ] Task lists and priorities have been derived
 - [ ] Inter-task dependencies have been documented
 - [ ] Definition of Done has been defined for each task
-- [ ] Each owner's review written as `review_{agent_name}.md` in `docs/spec/v{N}/`
+- [ ] Each owner's review written as `review-{agent_name}.md` in `docs/spec/v{N}/`
 - [ ] Team created via TeamCreate and members spawned via Agent tool
-- [ ] CLAUDE.md updated with DCVE configuration (team composition, operating rules, document structure)
+- [ ] CLAUDE.md verified: already has team-related content (used as-is) or newly written with DCVE configuration (DCVE cycle overview, team composition with kebab-case agent names, operating rules, document structure)
 - [ ] Document management setup confirmed with user (opted in/out, designated manager if applicable)
 
 ---

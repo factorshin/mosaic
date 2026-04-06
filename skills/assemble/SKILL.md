@@ -1,6 +1,6 @@
 ---
 name: assemble
-description: Bootstrap a Claude Code agent team for an existing project by scanning code and interviewing the user. Use when the user wants to 'assemble a team', 'set up agent team', 'configure teammates', or spawn role-assigned members for a brownfield repo.
+description: Bootstrap a Claude Code agent team for an existing project by scanning code and interviewing the user. Use when the user wants to 'assemble a team', 'set up agent team', 'configure teammates', or spawn domain-assigned members for a brownfield repo.
 ---
 
 # Assemble — Brownfield Agent Team Bootstrap
@@ -80,7 +80,7 @@ Write a short internal scan summary (do not save as a file unless the user asks)
 3. **Priority and pain**: "What's the most important or most painful area right now?" — this often reveals which domain deserves its own owner.
 4. **Team size preference**: "Do you have a size in mind for the team, or would you like me to propose one based on the scan and this conversation?"
 5. **Custom operating rules**: "The team will use a default set of operating rules (spawn mechanism, communication, cross-domain changes, leader role, intent confirmation, shutdown, error recovery — see the CLAUDE.md Authoring section). Are there any additional rules you want to add? For example: commit message style, branch conventions, review requirements, specific files the team should never touch, or any project-specific habits you want enforced." Record the user's answer verbatim — these rules go into CLAUDE.md alongside the defaults.
-6. **Pre-existing team check** (only if CLAUDE.md already has a team): "I found an existing team configuration in CLAUDE.md. Do you want to keep that team, replace it, or extend it?"
+6. **Pre-existing team check** (only if CLAUDE.md already has a team): "I found an existing team composition in CLAUDE.md. Do you want to keep that team, replace it, or extend it?"
 
 ### How to ask
 
@@ -100,8 +100,8 @@ Write a short internal scan summary (do not save as a file unless the user asks)
 ### What a proposal contains
 
 1. **Team size**: total number of owners (excluding the main agent, which acts as team leader).
-2. **Role table**: for each owner, specify role name, domain scope, and responsibility. Match role names to the repo's actual vocabulary where possible (e.g., if the repo uses `apps/web` and `apps/api`, prefer `web-owner` / `api-owner` over generic `frontend` / `backend`).
-3. **Rationale line per role**: one sentence explaining why this owner exists, citing evidence from the scan or interview.
+2. **Team composition table**: for each owner, specify `{agent_name}` (kebab-case), domain scope, and responsibility. Match agent names to the repo's actual vocabulary where possible (e.g., if the repo uses `apps/web` and `apps/api`, prefer `web-owner` / `api-owner` over generic `frontend` / `backend`).
+3. **Rationale line per owner**: one sentence explaining why this owner exists, citing evidence from the scan or interview.
 4. **Out-of-scope note**: explicitly list areas the team will not own, so the user can confirm.
 5. **Custom operating rules** (if any): echo back the user-provided rules from Phase 2 interview question 5, so the user can confirm they were captured correctly before CLAUDE.md is written. If the user said "none", note that explicitly.
 6. **CLAUDE.md plan**: state whether CLAUDE.md will be created new, extended, or have its team section replaced.
@@ -118,8 +118,8 @@ Do not inflate team size to match the repo's total surface area. Match it to wha
 
 Show the proposal as a short, scannable summary. The summary **must visibly include** all of the following so the user can verify each item before approving:
 
-- **Role table**: every proposed teammate with role name, domain, and responsibility (markdown table)
-- **Rationale**: one line per role citing scan or interview evidence
+- **Team composition table**: every proposed teammate with `{agent_name}` (kebab-case), domain, and responsibility (markdown table)
+- **Rationale**: one line per owner citing scan or interview evidence
 - **Out-of-scope**: the areas the team will not own
 - **Custom rules echo-back** (if the user provided any in Phase 2 interview question 5): show each custom rule **verbatim**, exactly as the user said it. This is the user's chance to catch misrecorded or paraphrased rules before CLAUDE.md is written. If the user said "none", show the "none — defaults only" equivalent in the user's language.
 - **CLAUDE.md plan**: state whether CLAUDE.md will be created new, extended, or have its team section replaced
@@ -143,17 +143,17 @@ Render the proposal using this structure. Translate the section titles to the us
 
 **Team size**: N owner(s) + team leader (this agent)
 
-### Roles
+### Team composition
 
-| Role | Domain | Responsibility |
+| {agent_name} | Domain | Responsibility |
 |---|---|---|
-| <role-1> | `<path>` | <one-line responsibility> |
-| <role-2> | `<path>` | <one-line responsibility> |
+| <agent-name-1> | `<path>` | <one-line responsibility> |
+| <agent-name-2> | `<path>` | <one-line responsibility> |
 
 ### Rationale
 
-- **<role-1>**: <why this owner exists>. Evidence: <file path / manifest dep / README quote / interview answer>.
-- **<role-2>**: <why this owner exists>. Evidence: <...>.
+- **<agent-name-1>**: <why this owner exists>. Evidence: <file path / manifest dep / README quote / interview answer>.
+- **<agent-name-2>**: <why this owner exists>. Evidence: <...>.
 
 ### Out of scope
 
@@ -177,7 +177,7 @@ Render the proposal using this structure. Translate the section titles to the us
 **Template flex rules**:
 - For solo (1 owner) projects, the Rationale section may be a single line instead of a bulleted list.
 - Do not omit any of the five content sections (Roles, Rationale, Out of scope, Custom operating rules, CLAUDE.md plan). Even if one is trivial (e.g., "Out of scope: none"), write it out so the user can see it was considered.
-- Code identifiers (file paths, package names, dependency names, role names like `web-owner`) stay in their original form — do not translate them.
+- Code identifiers (file paths, package names, dependency names, agent names like `web-owner`) stay in their original form — do not translate them.
 
 **Done when**: the user has a proposal they can respond to with "yes", "no", or "change X".
 
@@ -187,7 +187,7 @@ Render the proposal using this structure. Translate the section titles to the us
 
 Do not proceed to Execute until the user explicitly approves. Acceptable approvals: "yes", "go ahead", "looks good, do it", or any unambiguous go-signal.
 
-If the user asks to adjust the composition, return to Phase 3 with the edit and re-present. If the user asks a clarifying question about a role, answer it without moving forward.
+If the user asks to adjust the composition, return to Phase 3 with the edit and re-present. If the user asks a clarifying question about an owner, answer it without moving forward.
 
 If the user rejects the whole proposal, return to Phase 2 to re-interview on what's missing.
 
@@ -199,10 +199,12 @@ If the user rejects the whole proposal, return to Phase 2 to re-interview on wha
 
 ### Execution order
 
-1. **Write CLAUDE.md first**. This ensures the team's operating rules are on disk before any teammate is spawned. See "CLAUDE.md Authoring" below for contents.
-2. **Create the team** using the `TeamCreate` tool. Skip if the team already exists under the same name.
-3. **Spawn team members** using the `Agent` tool with the `team_name` parameter, in the order listed in the CLAUDE.md team composition table. Pass each member the project overview, their role description, and a pointer to CLAUDE.md for shared rules. Skip members that are already active.
-4. **Confirm to the user**: report which members were created, link to the updated CLAUDE.md, and ask what the user wants the team to do first.
+1. **Draft CLAUDE.md contents**. Prepare the contents to write (see "CLAUDE.md Authoring" below). Do not write to disk yet.
+2. **CLAUDE.md approval gate (mandatory)**: Present the draft CLAUDE.md contents to the user and get explicit approval before writing. Do not write CLAUDE.md without user approval.
+3. **Write CLAUDE.md** only after user approval from step 2. This ensures the team's operating rules are on disk before any teammate is spawned.
+4. **Create the team** using the `TeamCreate` tool. Skip if the team already exists under the same name.
+5. **Spawn team members** using the `Agent` tool with the `team_name` parameter, in the order listed in the CLAUDE.md team composition table. Pass each member the project overview, their domain description, and a pointer to CLAUDE.md for shared rules. Skip members that are already active.
+6. **Confirm to the user**: report which members were created, link to the updated CLAUDE.md, and ask what the user wants the team to do first.
 
 ### Error recovery
 
@@ -220,14 +222,14 @@ During Phase 5, write the following contents into the working directory's CLAUDE
 
 1. **Project overview**: project name, primary purpose, and tech stack summary. Populated from Phase 1 scan evidence (README, manifest files) and Phase 2 user confirmation. Do not invent content that the scan and interview did not produce.
 
-2. **Team composition table**: a markdown table with columns `Role | Domain | Responsibility`. The table order determines the order in which team members are spawned in Phase 5. Example row: `web-owner | apps/web | Next.js frontend: pages, components, client state`.
+2. **Team composition table**: a markdown table with columns `{agent_name} | Domain | Responsibility`. `{agent_name}` is kebab-case (e.g. `web-owner`). The table order determines the order in which team members are spawned in Phase 5. Example row: `web-owner | apps/web | Next.js frontend: pages, components, client state`.
 
 3. **Team operating rules**: this section has two parts — **Defaults** (always written) and **Custom** (only if the user provided rules in the Phase 2 interview).
 
    **Defaults** (always written):
    - **Spawn mechanism**: teams are created via the `TeamCreate` tool. Team members are spawned via the `Agent` tool with the `team_name` parameter. Do not use standalone subagents outside the team.
    - **Communication**: team members communicate via `SendMessage`. Use `to: "*"` for broadcasts, specific names for direct messages.
-   - **Cross-domain changes**: before making a change that affects another owner's domain, notify that owner via `SendMessage` and wait for acknowledgment. Record the agreement in a shared scratch note or in a comment at the top of the affected file, so future team members can see the decision history.
+   - **Cross-domain changes**: do not directly modify another owner's domain. If a change is needed in another domain, notify the team leader, who coordinates with the affected owner. The affected owner implements the change in their own domain.
    - **Main agent as team leader**: the main agent coordinates tasks, assigns work, and does not implement directly. Exploration, design, and implementation are performed by the owners listed in the Team composition table above.
    - **User intent confirmation**: when the user asks a question or makes a suggestion, the team leader confirms intent before delegating. Questions are not execution directives.
    - **Team member shutdown**: shut down team members only when the user explicitly instructs. Do not auto-shut down on task completion.
