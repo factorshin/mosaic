@@ -38,7 +38,7 @@ Fallbacks:     V1→C (infeasible spec), Approval→V2 or V1 (revisions), E→D 
 
 **User gate (V1 complete)**: Present a summary of spec.md (architecture, tech stack, key risks) and ask about project scale. Example: "Here is the architecture and tech stack. See `docs/spec/v{N}/spec.md` for details. Which project scale would you like?" Do not decide unilaterally. Present the scale options with a brief explanation of what each entails, and let the user choose:
 
-- **Solo**: Skip V2 and V3. Proceed directly from V1 to E. Spec folder contains `devise.md`, `curated.md`, `spec.md` only — no `review_*.md`
+- **Solo**: Skip V2 and V3. Proceed directly from V1 to E. Spec folder contains `devise.md`, `curated.md`, `spec.md` only — no `review-*.md`
 - **Team** (2+ owners): Execute V2 and V3 fully. V3 cross-review scope is limited to directly adjacent domains. Re-review cycle (step 7) is still required
 
 Even if the project appears small, explain the trade-offs (e.g., "This project could be handled solo, but forming a team would allow domain-separated reviews. Which approach would you prefer?") and wait for the user's decision before skipping any phase.
@@ -101,11 +101,13 @@ Partition the overall design into domains and assign owners.
 #### Team Creation Procedure
 
 1. Read CLAUDE.md in the working directory (if it exists)
-   - If team configuration is present: show it to the user and ask whether to keep the existing team composition and add DCVE operating rules only, or define a new team
-   - If no CLAUDE.md: define domain-specific roles and write full team composition along with project context (see "CLAUDE.md Authoring" section below)
-   - If CLAUDE.md exists but no team configuration: add team composition and DCVE operating rules while preserving existing project context
-2. Create the team using the **TeamCreate** tool (skip if the team already exists)
-3. Spawn team members using the **Agent** tool with `team_name` parameter, in the order listed in the CLAUDE.md team composition table (skip if team members are already active)
+   - If team-related content already exists (team composition, operating rules, or document structure): use the existing configuration as-is. Do not modify CLAUDE.md — skip to step 4
+   - If no CLAUDE.md: define domain-specific agents with kebab-case names and draft the full CLAUDE.md contents (see "CLAUDE.md Authoring" section below)
+   - If CLAUDE.md exists but has no team-related content: draft team composition and DCVE-specific items to add
+2. **CLAUDE.md approval gate (mandatory)**: Present the draft CLAUDE.md contents to the user and get explicit approval before writing. Do not write CLAUDE.md without user approval
+3. Write CLAUDE.md only after user approval from step 2
+4. Create the team using the **TeamCreate** tool (skip if the team already exists)
+5. Spawn team members using the **Agent** tool with `team_name` parameter, in the order listed in the CLAUDE.md team composition table (skip if team members are already active)
 
 #### Each Owner's Responsibilities
 
@@ -113,14 +115,14 @@ Partition the overall design into domains and assign owners.
 2. Review feasibility of their domain
 3. Derive task list, priorities, and execution order
 4. Define the Definition of Done for each task
-5. Write the review document as `review_{agent_name}.md` in the current spec version folder (e.g., `docs/spec/v1/review_backend.md`)
+5. Write the review document as `review-{agent_name}.md` in the current spec version folder (e.g., `docs/spec/v1/review-backend-api.md`)
    - Include: domain design summary, feasibility assessment, identified risks, task list with priorities, and interface expectations toward adjacent domains
 
 ### V3. Cross-Team Consistency Verification
 
 Verify that each owner's design does not conflict and align on interfaces.
 
-1. Each owner reads collaborating team members' review documents from the current spec version folder (e.g., the backend owner reads `review_frontend.md`, `review_infra.md`)
+1. Each owner reads collaborating team members' review documents from the current spec version folder (e.g., the `backend-api` owner reads `review-frontend-web.md`, `review-infra.md`)
 2. Cross-check interface alignment (APIs, data formats, protocols, etc.) against their own review
 3. Verify no field name/type/structure mismatches exist at layer boundaries
 4. Check for differing interpretations of the same spec
@@ -169,6 +171,7 @@ On re-entry:
 ## Team Operating Rules
 
 ### Team Leader Role
+- The main agent (the one running the DCVE skill) is the team leader
 - Do not execute user commands directly — delegate to the responsible owner
 - Exploration, design, and implementation are all performed by domain owners
 - The team leader handles **task creation, assignment, coordination, and review only**
@@ -201,20 +204,33 @@ On re-entry:
 
 ## CLAUDE.md Authoring
 
-During V2, when assigning owners, write the following in the working directory's CLAUDE.md. When the user chose to keep an existing team setup, add only items 3 (shared operating rules) and 4 (document structure) below. Do not overwrite existing team composition or project overview. If DCVE operating rules already exist in CLAUDE.md (from a previous cycle), replace them rather than appending duplicates.
+During V2, when assigning owners, write the following in the working directory's CLAUDE.md. What to write depends on the current state:
+
+- **CLAUDE.md already has team-related content** (team composition, operating rules, or document structure): **Do not modify CLAUDE.md.** Use the existing configuration as-is
+- **No CLAUDE.md**: Draft all items (1–6) and **present to the user for approval before writing**
+- **CLAUDE.md exists but has no team-related content**: Draft items 2, 3, 4, and 5 and **present to the user for approval before writing**. Preserve existing project overview and context
+
+**CLAUDE.md approval gate (mandatory)**: CLAUDE.md를 생성하거나 수정할 때는 반드시 사용자에게 내용을 먼저 보여주고 승인을 받은 후에만 디스크에 쓴다. 승인 없이 CLAUDE.md를 쓰지 않는다.
 
 ### Required Contents
 
 1. **Project overview**: Project name, purpose, core spec summary
-2. **Team composition table**: Role name, domain, scope of responsibility (the table order determines team member creation order)
-3. **Shared operating rules**: Applicable items from "Team Operating Rules" above
+2. **DCVE cycle overview**: Explain the full cycle so team members understand the workflow they operate within:
+   - **Devise**: Unconstrained idea generation across user, technical, and business perspectives
+   - **Curate**: Select core features, define MVP scope, prioritize by impact and difficulty
+   - **Verify**: V1 designs architecture and assesses feasibility. V2 partitions domains, assigns owners, and each owner writes a detailed design review. V3 cross-reviews adjacent domains for interface consistency
+   - **Execute**: Owners implement tasks in defined order; team leader coordinates and monitors
+   - **User gates**: The user approves transitions between D→C, C→V1, V1→E (or V1→V2 for team scale), and V3→E. Execution requires explicit user approval
+   - **Re-entry**: If scope changes during E, re-enter from D or V depending on impact; create a new spec version folder
+3. **Team composition table**: `{agent_name}` (kebab-case, e.g. `backend-api`), domain, scope of responsibility (the table order determines team member creation order). This `{agent_name}` is used in file naming conventions such as `review-{agent_name}.md`
+4. **Shared operating rules**: Applicable items from "Team Operating Rules" above
    - Must include: teams are created via **TeamCreate** tool, and team members are spawned via **Agent** tool with `team_name` parameter. Do not use standalone subagents outside the team.
    - Team members may communicate freely via SendMessage. All conflict resolutions and design changes must be recorded in review documents.
    - **Development flow**: Before implementing changes that affect multiple components or domain interfaces, write a spec in `docs/spec/v{N}/`. Use the current version folder unless the change significantly alters the existing spec. Adjacent team members review the spec and check interface alignment. After review is complete, get user confirmation before implementation.
    - **Review rules**: After completing their own review document, each member reads adjacent members' review documents and checks interface alignment (APIs, data formats, protocols). Conflicts are resolved via SendMessage and recorded in review documents (before → after). Unresolved conflicts after one exchange are escalated to the user. Review is complete when no interface mismatches remain and all changes are recorded.
-4. **Document structure**: Document paths and conventions used in the project (`docs/spec/v{N}/`, `docs/history/`, etc.)
+5. **Document structure**: Document paths and conventions used in the project (`docs/spec/v{N}/`, `docs/history/`, etc.)
    - Must include: at session start, read the latest `docs/history/YYYY-MM-DD/session_summary.md` for prior context. `docs/history/history.md` is append-only — do not read at session start
-5. **Project context** (when CLAUDE.md is newly created): project structure, tech stack, key conventions established during implementation — so that subsequent DCVE cycles can understand the existing codebase
+6. **Project context** (when CLAUDE.md is newly created): project structure, tech stack, key conventions established during implementation — so that subsequent DCVE cycles can understand the existing codebase
 
 ---
 
@@ -229,7 +245,7 @@ docs/
 │   │   ├── devise.md                  # D phase — all ideas without judgment
 │   │   ├── curated.md                 # C phase — core selection, priorities, MVP scope
 │   │   ├── spec.md                    # V1 phase — project specification
-│   │   ├── review_{agent_name}.md     # V2 phase — each owner's detailed design review
+│   │   ├── review-{agent_name}.md     # V2 phase — each owner's detailed design review
 │   │   └── ...
 │   └── v2/                            # Created on spec revision (E→D re-entry, V3 feedback, etc.)
 │       └── ...
